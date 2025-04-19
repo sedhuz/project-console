@@ -1,0 +1,320 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* CSS Variables (Theme) */
+:root {
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --bg-color: #f0f2f5;
+    /* Slightly muted background */
+    --card-bg: rgba(255, 255, 255, 0.85);
+    /* Semi-transparent white */
+    --card-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    --card-border: 1px solid rgba(0, 0, 0, 0.06);
+    --border-radius: 12px;
+    /* Increased roundness */
+    --text-color: #1d1d1f;
+    /* Darker text for contrast */
+    --text-muted: #6e6e73;
+    /* Muted gray */
+    --text-light: #f5f5f7;
+    /* Light text for dark labels */
+    --color-open: #007aff;
+    /* Apple Blue */
+    --color-merged: #34c759;
+    /* Apple Green */
+    --color-closed: #8e8e93;
+    /* Apple Gray */
+    --label-bg: #e5e5ea;
+    --label-text: #333;
+    --link-color: var(--color-open);
+}
+
+/* Basic Reset & Body Style */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+
+.dashboard-header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.dashboard-header img {
+    display: flex;
+    align-items: center;
+    width: 50px;
+    padding-right: 10px;
+}
+
+.mr-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    /* Responsive columns */
+    gap: 25px;
+}
+
+.mr-column {
+    background-color: rgba(230, 230, 230, 0.3);
+    /* Slightly distinct column bg */
+    border-radius: var(--border-radius);
+    padding: 15px;
+    min-height: 300px;
+    /* Ensure columns have some height */
+}
+
+.mr-column h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+
+/* Status Dots in Column Headers */
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-open-dot {
+    background-color: var(--color-open);
+}
+
+.status-merged-dot {
+    background-color: var(--color-merged);
+}
+
+.status-closed-dot {
+    background-color: var(--color-closed);
+}
+
+
+/* MR Card Styling */
+.mr-card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    border: var(--card-border);
+    padding: 18px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    /* Uncomment for glassmorphism effect */
+    /* backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); */
+    overflow: hidden;
+    /* Contain elements */
+}
+
+.mr-card:hover {
+    /* transform: translateY(-3px); */
+    /* Subtle lift */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Align items to top */
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mr-title {
+    font-weight: 600;
+    /* Semibold */
+    font-size: 0.95rem;
+    margin-right: 10px;
+    flex-grow: 1;
+    /* Allow title to take space */
+}
+
+.mr-ref {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    /* Prevent wrapping */
+}
+
+/* Card Body */
+.card-body p {
+    font-size: 0.85rem;
+    /* Slightly smaller text */
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: flex;
+    /* Align icons and text */
+    align-items: center;
+    gap: 6px;
+    /* Space between icon and text */
+}
+
+.card-body p span:first-child {
+    /* Style for icon placeholders */
+    display: inline-block;
+    width: 16px;
+    /* Give icon space */
+    text-align: center;
+    font-size: 1em;
+    /* Adjust icon size if needed */
+}
+
+.card-body .branches span:first-child {
+    font-size: 1.2em;
+}
+
+/* Make branch arrow slightly bigger */
+
+/* Stronger color for key info */
+.card-body .people span:first-child,
+.card-body .dates span:first-child {
+    color: #aaa;
+}
+
+.card-body p.dates:last-of-type {
+    margin-bottom: 15px;
+    /* More space before labels */
+}
+
+/* Status Specific Date Colors */
+.status-merged .dates span:first-child {
+    color: var(--color-merged);
+}
+
+.status-closed .dates span:first-child {
+    color: var(--color-closed);
+}
+
+
+/* Labels */
+.labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.label {
+    background-color: var(--label-bg);
+    color: var(--label-text);
+    padding: 4px 10px;
+    border-radius: 15px;
+    /* Pill shape */
+    font-size: 0.7rem;
+    /* Smaller label text */
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Example Specific Label Colors (add more as needed) */
+.label.good-to-merge,
+.label.reviewed {
+    background-color: #dfffea;
+    color: #28a745;
+}
+
+.label.master {
+    background-color: #e2e3e5;
+    color: #495057;
+}
+
+.label.bugfix {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.label.feature {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.label.wip {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.label.needs-review {
+    background-color: #ffeccc;
+    color: #ff8c00;
+}
+
+.label.sec-na,
+.label.no-pending {
+    background-color: #eee;
+    color: #555;
+}
+
+
+/* Card Footer */
+.card-footer {
+    text-align: right;
+}
+
+.mr-link {
+    text-decoration: none;
+    color: var(--link-color);
+    font-size: 1.1rem;
+    /* Adjust icon size */
+    transition: color 0.2s ease;
+}
+
+.mr-link:hover {
+    color: darken(var(--link-color), 10%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    .mr-columns {
+        grid-template-columns: 1fr;
+        /* Stack columns */
+        gap: 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .mr-card {
+        padding: 15px;
+    }
+}
