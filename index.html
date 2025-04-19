@@ -1,165 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GitLab MR Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png">
-</head>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+  </head>
 
-<body>
+  <body>
     <div class="dashboard-container">
-        <header class="dashboard-header">
-            <img src="favicon.png" alt="Logo" class="logo">
-            <h1>MR Dashboard</h1>
-        </header>
+      <header class="dashboard-header">
+        <img src="favicon.png" alt="Logo" class="logo" />
+        <h1>MR Dashboard</h1>
+      </header>
 
-        <main class="mr-columns">
-            <section class="mr-column open">
-                <h2><span class="status-dot status-open-dot"></span>Open</h2>
-            </section>
+      <main class="mr-columns">
+        <section class="mr-column open">
+          <h2><span class="status-dot status-open-dot"></span>Open</h2>
+        </section>
 
-            <section class="mr-column merged">
-                <h2><span class="status-dot status-merged-dot"></span>Merged</h2>
-            </section>
+        <section class="mr-column merged">
+          <h2><span class="status-dot status-merged-dot"></span>Merged</h2>
+        </section>
 
-            <section class="mr-column closed">
-                <h2><span class="status-dot status-closed-dot"></span>Closed</h2>
-            </section>
-        </main>
+        <section class="mr-column closed">
+          <h2><span class="status-dot status-closed-dot"></span>Closed</h2>
+        </section>
+      </main>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const openColumn = document.querySelector('.mr-column.open');
-            const mergedColumn = document.querySelector('.mr-column.merged');
-            const closedColumn = document.querySelector('.mr-column.closed');
+      document.addEventListener("DOMContentLoaded", () => {
+        const openColumn = document.querySelector(".mr-column.open");
+        const mergedColumn = document.querySelector(".mr-column.merged");
+        const closedColumn = document.querySelector(".mr-column.closed");
 
-            // Function to format date strings (e.g., "YYYY-MM-DD" to "Mon DD, YYYY")
-            function formatDateTime(dateString) {
-                if (!dateString) return '';
-                try {
-                    const date = new Date(dateString);
-                    if (isNaN(date.getTime())) {
-                        console.warn(`Invalid date string encountered: ${dateString}`);
-                        return dateString;
-                    }
-                    return date.toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true // Use 12-hour format with AM/PM
-                    });
-                } catch (e) {
-                    console.error(`Error formatting date: ${dateString}`, e);
-                    return dateString;
-                }
+        // Function to format date strings (e.g., "YYYY-MM-DD" to "Mon DD, YYYY")
+        function formatDateTime(dateString) {
+          if (!dateString) return "";
+          try {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) {
+              console.warn(`Invalid date string encountered: ${dateString}`);
+              return dateString;
             }
+            return date.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+              hour12: true, // Use 12-hour format with AM/PM
+            });
+          } catch (e) {
+            console.error(`Error formatting date: ${dateString}`, e);
+            return dateString;
+          }
+        }
 
-            // Function to create an MR card element (Remains the same as before)
-            function createMrCard(mr) {
-                const card = document.createElement('div');
-                // Use mr.status from the object to set the class
-                card.classList.add('mr-card', `status-${mr.status || 'unknown'}`);
+        // Function to create an MR card element (Remains the same as before)
+        function createMrCard(mr) {
+          const card = document.createElement("div");
+          // Use mr.status from the object to set the class
+          card.classList.add("mr-card", `status-${mr.status || "unknown"}`);
 
-                // Sanitize label text for CSS class names
-                const sanitizeForClass = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+          // Sanitize label text for CSS class names
+          const sanitizeForClass = (text) =>
+            text
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/^-+|-+$/g, "");
 
-                const labelsHtml = (mr.labels || []).map(label => // Handle missing labels array gracefully
-                    `<span class="label ${sanitizeForClass(label)}">${label.toUpperCase()}</span>`
-                ).join('');
+          const labelsHtml = (mr.labels || [])
+            .map(
+              (
+                label // Handle missing labels array gracefully
+              ) =>
+                `<span class="label ${sanitizeForClass(
+                  label
+                )}">${label.toUpperCase()}</span>`
+            )
+            .join("");
 
-                const createdAtFormatted = formatDateTime(mr.created_at);
-                const mergedAtFormatted = formatDateTime(mr.merged_at);
-                const closedAtFormatted = formatDateTime(mr.closed_at);
+          const createdAtFormatted = formatDateTime(mr.created_at);
+          const mergedAtFormatted = formatDateTime(mr.merged_at);
+          const closedAtFormatted = formatDateTime(mr.closed_at);
 
-                card.innerHTML = `
+          card.innerHTML = `
                     <div class="card-header">
-                        <span class="mr-title">${mr.title || 'No Title'}</span>
-                        <span class="mr-ref">${mr.ref || ''}</span>
+                        <span class="mr-title">${mr.title || "No Title"}</span>
+                        <span class="mr-ref">${mr.ref || ""}</span>
                     </div>
                     <div class="card-body">
-                        <p class="branches"><span>❗️</span> ${mr.source_branch || '?'} → ${mr.target_branch || '?'}</p>
-                        <p class="dates"><span>&#128197;</span> Created: ${createdAtFormatted || '?'}</p>
-                        ${mr.status === 'merged' && mr.merged_at ? `<p class="dates"><span>&#10003;</span> Merged: ${mergedAtFormatted} by ${mr.merged_by.name || 'unknown'}</p>` : ''}
-                        ${mr.status === 'closed' && mr.closed_at ? `<p class="dates"><span>&#10005;</span> Closed: ${closedAtFormatted} by ${mr.closed_by.name || 'unknown'}</p>` : ''}
+                        <p class="branches"><span>❗️</span> ${
+                          mr.source_branch || "?"
+                        } → ${mr.target_branch || "?"}</p>
+                        <p class="dates"><span>&#128197;</span> Created: ${
+                          createdAtFormatted || "?"
+                        }</p>
+                        ${
+                          mr.status === "merged" && mr.merged_at
+                            ? `<p class="dates"><span>&#10003;</span> Merged: ${mergedAtFormatted} by ${
+                                mr.merged_by.name || "unknown"
+                              }</p>`
+                            : ""
+                        }
+                        ${
+                          mr.status === "closed" && mr.closed_at
+                            ? `<p class="dates"><span>&#10005;</span> Closed: ${closedAtFormatted} by ${
+                                mr.closed_by.name || "unknown"
+                              }</p>`
+                            : ""
+                        }
                         <div class="labels">
                             ${labelsHtml}
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="${mr.web_url || '#'}" target="_blank" class="mr-link" title="View MR">&#128279;</a>
+                        <a href="${
+                          mr.web_url || "#"
+                        }" target="_blank" class="mr-link" title="View MR">&#128279;</a>
                     </div>
                 `;
-                return card;
+          return card;
+        }
+
+        // Fetch MR data from the local JSON file
+        fetch("merge_requests.json")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Clear existing content
+            openColumn.innerHTML =
+              '<h2><span class="status-dot status-open-dot"></span>Open</h2>';
+            mergedColumn.innerHTML =
+              '<h2><span class="status-dot status-merged-dot"></span>Merged</h2>';
+            closedColumn.innerHTML =
+              '<h2><span class="status-dot status-closed-dot"></span>Closed</h2>';
+
+            if (!Array.isArray(data.merge_requests)) {
+              console.warn(
+                "merge_requests.json must contain a top-level 'merge_requests' array."
+              );
+              return;
             }
 
-            // Fetch MR data from the local JSON file
-            fetch('mrs.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json(); // Parse the JSON which is now { open: [], merged: [], closed: [] }
-                })
-                .then(data => {
-                    // Clear existing content first
-                    openColumn.innerHTML = '<h2><span class="status-dot status-open-dot"></span>Open</h2>';
-                    mergedColumn.innerHTML = '<h2><span class="status-dot status-merged-dot"></span>Merged</h2>';
-                    closedColumn.innerHTML = '<h2><span class="status-dot status-closed-dot"></span>Closed</h2>';
+            data.merge_requests.forEach((mr) => {
+              const state = (mr.state || "").toLowerCase();
+              const card = createMrCard(mr);
 
-                    // Process OPEN MRs from data.open array
-                    if (data.open && Array.isArray(data.open)) {
-                        data.open.forEach(mr => {
-                            // Make sure the mr object itself has the 'status' field for createMrCard
-                            if (!mr.status) mr.status = 'open'; // Assign status if missing
-                            const cardElement = createMrCard(mr);
-                            openColumn.appendChild(cardElement);
-                        });
-                    } else {
-                        console.warn("No 'open' MRs array found or it's not an array in mrs.json");
-                    }
-
-
-                    // Process MERGED MRs from data.merged array
-                    if (data.merged && Array.isArray(data.merged)) {
-                        data.merged.forEach(mr => {
-                            if (!mr.status) mr.status = 'merged'; // Assign status if missing
-                            const cardElement = createMrCard(mr);
-                            mergedColumn.appendChild(cardElement);
-                        });
-                    } else {
-                        console.warn("No 'merged' MRs array found or it's not an array in mrs.json");
-                    }
-
-
-                    // Process CLOSED MRs from data.closed array
-                    if (data.closed && Array.isArray(data.closed)) {
-                        data.closed.forEach(mr => {
-                            if (!mr.status) mr.status = 'closed'; // Assign status if missing
-                            const cardElement = createMrCard(mr);
-                            closedColumn.appendChild(cardElement);
-                        });
-                    } else {
-                        console.warn("No 'closed' MRs array found or it's not an array in mrs.json");
-                    }
-
-                })
-                .catch(error => {
-                    console.error('Error fetching or processing MR data:', error);
-                    // Display an error message on the page
-                    const mainContent = document.querySelector('.mr-columns');
-                    mainContent.innerHTML = `<p style="color: red; text-align: center;">Failed to load Merge Request data. Please check mrs.json file format (expecting {"open": [], "merged": [], "closed": []}) and content, and console for errors.</p>`;
-                });
-        });
+              switch (state) {
+                case "opened":
+                  openColumn.appendChild(card);
+                  break;
+                case "merged":
+                  mergedColumn.appendChild(card);
+                  break;
+                case "closed":
+                  closedColumn.appendChild(card);
+                  break;
+                default:
+                  console.warn(`Unknown MR state: '${state}'`, mr);
+              }
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching MR data:", error);
+            openColumn.innerHTML =
+              "<p>Error loading data. Please try again later.</p>";
+          });
+      });
     </script>
-</body>
-
+  </body>
 </html>
