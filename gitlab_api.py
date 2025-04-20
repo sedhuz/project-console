@@ -2,7 +2,7 @@ import json
 import os
 import requests
 from pathlib import Path
-from config_loader import loadConfig
+from config_loader import load_config
 
 
 # ─── GitLab MR Fetching ───────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ def fetchMergeRequests(token, state, baseurl, perPage=100):
 
 def main():
     # 1) Load full config map
-    config = loadConfig()  # returns dict with all values
+    config = load_config()  # returns dict with all values
 
     # 2) Extract needed values
     ACCESS_TOKEN = config["gitlab_access_token"]

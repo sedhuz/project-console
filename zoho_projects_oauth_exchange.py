@@ -1,9 +1,9 @@
 import requests
 import json
-from config_loader import loadConfig
+from config_loader import load_config
 
 def exchange_code_for_tokens(auth_code):
-    config = loadConfig()
+    config = load_config()
     oauth = config.get("zoho_projects_oauth", {})
 
     CLIENT_ID = oauth["client_id"]

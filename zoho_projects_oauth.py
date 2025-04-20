@@ -1,9 +1,9 @@
 from flask import Flask, request, redirect, render_template
 import webbrowser
-from config_loader import loadConfig
+from config_loader import load_config
 
 def load_settings():
-    config = loadConfig()
+    config = load_config()
     oauth = config.get("zoho_projects_oauth", {})
     return {
         "client_id": oauth.get("client_id"),
@@ -22,7 +22,7 @@ auth_url = (
     "https://accounts.zoho.com/oauth/v2/auth"
     f"?scope={SCOPE_PARAM}&client_id={CLIENT_ID}"
     "&response_type=code&access_type=offline"
-    f"&redirect_uri={REDIRECT_URI}"
+    f"&redirect_uri={REDIRECT_URI}&prompt=consent"
 )
 
 app = Flask(__name__, template_folder="templates", static_folder="static")

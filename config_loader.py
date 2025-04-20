@@ -5,7 +5,7 @@ from pathlib import Path
 CONFIG_FILE = Path(__file__).parent / "config.json"
 
 
-def loadConfig():
+def load_config():
     try:
         with open(CONFIG_FILE, "r") as f:
             return json.load(f)  # json.load reads all key-value pairs
