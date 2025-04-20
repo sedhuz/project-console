@@ -2,23 +2,7 @@ import json
 import os
 import requests
 from pathlib import Path
-
-# ─── Config Loading ───────────────────────────────────────────────────────────
-CONFIG_FILE = Path(__file__).parent / "config.json"
-
-
-def loadConfig():
-    try:
-        with open(CONFIG_FILE, "r") as f:
-            return json.load(f)  # json.load reads all key-value pairs
-    except FileNotFoundError:
-        raise SystemExit(
-            f"fatal : config file not found: {CONFIG_FILE}"
-        )  # handle missing file
-    except json.JSONDecodeError as e:
-        raise SystemExit(
-            f"fatal : invalid JSON in {CONFIG_FILE}: {e}"
-        )  # handle bad JSON
+from config_loader import loadConfig
 
 
 # ─── GitLab MR Fetching ───────────────────────────────────────────────────────

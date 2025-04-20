@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Zoho OAuth Success</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Authorization Successful !</h1>
+      <p>
+        <span class="code" id="authCode">{{ code }}</span>
+      </p>
+      <div class="note">Click the code to copy</div>
+    </div>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script>
+      const codeEl = document.getElementById("authCode");
+      const toast = document.getElementById("toast");
+
+      codeEl.addEventListener("click", () => {
+        navigator.clipboard.writeText(codeEl.textContent).then(() => {
+          toast.classList.add("show");
+          setTimeout(() => toast.classList.remove("show"), 2800);
+        });
+      });
+    </script>
+  </body>
+</html>

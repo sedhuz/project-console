@@ -1,0 +1,135 @@
+:root {
+  --light-green: #e7feea;
+  --light-red: #fce8e8;
+  --medium-green: #d5fddd;
+  --green: #34cf48;
+  --red: #f7534a;
+  --green-dark: #2bbf3a;
+  --gray: #555;
+  --gray-light: #999;
+  --bg: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+h1 {
+  padding-bottom: 1.25rem;
+}
+
+.container {
+  text-align: center;
+}
+
+p,
+.note {
+  font-size: 17px;
+  color: var(--gray-light);
+  margin-bottom: 20px;
+}
+
+.note {
+  margin-bottom: 0;
+  padding-top: 6px;
+}
+
+button {
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  background-color: var(--light-green);
+  border: 2px solid var(--green);
+  border-radius: 8px;
+  color: var(--green);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--medium-green);
+}
+
+.code {
+  font-family: monospace;
+  font-size: 15px;
+  color: var(--gray);
+  background-color: #f4f4f4;
+  border: 2px solid var(--green);
+  padding: 10px 14px;
+  border-radius: 8px;
+  display: inline-block;
+  cursor: pointer;
+  user-select: all;
+  transition: background-color 0.2s;
+}
+
+.code:hover {
+  background-color: var(--light-green);
+}
+
+.err {
+  font-family: monospace;
+  font-size: 15px;
+  color: var(--red);
+  background-color: var(--light-red);
+  border: 2px solid var(--red);
+  padding: 10px 14px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  background: var(--light-green);
+  border: 2px solid var(--green);
+  color: var(--gray);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toast.show {
+  animation: slideInFade 0.4s ease-out forwards,
+    slideOutFade 0.4s ease-in forwards 2.4s;
+}
+
+@keyframes slideInFade {
+  from {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutFade {
+  from {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+}
