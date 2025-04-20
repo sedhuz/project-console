@@ -8,9 +8,9 @@ from time import sleep
 import markdown2
 
 # ─── Constants ──────────────────────────────────────────────────────────────
-DATA_FILE = Path(__file__).parent / "merge_requests.json"
-TASKS_DUMP = Path("tasks.txt")
-ISSUES_DUMP = Path("issues.txt")
+DATA_FILE = Path(__file__).parent / "json" / "merge_requests.json"
+TASKS_DUMP = Path(__file__).parent / "json" / "tasks.txt"
+ISSUES_DUMP = Path(__file__).parent / "json" / "issues.txt"
 _auth_token = None
 
 

@@ -1,6 +1,0 @@
-{
-    "gitlab_access_token": "<your-access-token>",
-    "gitlab_api_baseurl": "https://git.csez.zohocorpin.com/api/v4/",
-    "gitlab_project_id": "<your-project-id>",
-    "gitlab_per_page": 100
-}

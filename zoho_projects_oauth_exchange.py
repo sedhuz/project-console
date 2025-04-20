@@ -1,6 +1,10 @@
 import requests
 import json
+from pathlib import Path
 from config_loader import load_config
+
+TOKENS_FILE = Path(__file__).resolve().parent / "json" / "tokens.json"
+
 
 def exchange_code_for_tokens(auth_code):
     config = load_config()
@@ -16,7 +20,7 @@ def exchange_code_for_tokens(auth_code):
         "client_id": CLIENT_ID,
         "client_secret": CLIENT_SECRET,
         "redirect_uri": REDIRECT_URI,
-        "code": auth_code
+        "code": auth_code,
     }
 
     response = requests.post(TOKEN_URL, params=params)
@@ -24,9 +28,11 @@ def exchange_code_for_tokens(auth_code):
     tokens = response.json()
     return tokens
 
-def save_tokens(tokens, filename="tokens.json"):
+
+def save_tokens(tokens, filename=TOKENS_FILE):
     with open(filename, "w") as f:
         json.dump(tokens, f, indent=2)
+
 
 if __name__ == "__main__":
     auth_code = input("Enter the authorization code: ").strip()

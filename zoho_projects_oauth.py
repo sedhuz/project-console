@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, render_template
 import webbrowser
 from config_loader import load_config
 
+
 def load_settings():
     config = load_config()
     oauth = config.get("zoho_projects_oauth", {})
@@ -10,6 +11,7 @@ def load_settings():
         "scopes": oauth.get("scopes", []),
         "port": oauth.get("app_port", 5001),
     }
+
 
 settings = load_settings()
 CLIENT_ID = settings["client_id"]
@@ -27,14 +29,17 @@ auth_url = (
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
+
 @app.route("/")
 def home():
     app.logger.info("Homepage accessed")
     return render_template("home.html")
 
+
 @app.route("/login")
 def login():
     return redirect(auth_url)
+
 
 @app.route("/callback")
 def callback():
@@ -42,6 +47,7 @@ def callback():
     if not code:
         return render_template("callback_err.html"), 400
     return render_template("callback.html", code=code)
+
 
 if __name__ == "__main__":
     webbrowser.open(f"http://localhost:{PORT}/")

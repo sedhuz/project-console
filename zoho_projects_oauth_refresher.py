@@ -4,7 +4,8 @@ import requests
 import time
 from config_loader import load_config
 
-TOKENS_FILE = Path(__file__).parent / "tokens.json"
+TOKENS_FILE = Path(__file__).parent / "json" / "tokens.json"
+
 
 # ─── Load Tokens ─────────────────────────────────────────────────────────────
 def load_tokens():
@@ -14,6 +15,7 @@ def load_tokens():
     except Exception as e:
         raise SystemExit(f"fatal: failed to load tokens: {e}")
 
+
 # ─── Save Tokens ─────────────────────────────────────────────────────────────
 def save_tokens(data):
     try:
@@ -21,6 +23,7 @@ def save_tokens(data):
             json.dump(data, f, indent=2)
     except Exception as e:
         raise SystemExit(f"fatal: failed to save tokens: {e}")
+
 
 # ─── Retry Request Function ──────────────────────────────────────────────────
 def request_with_retry(url, headers_func, retries=3, delay=2):
@@ -66,6 +69,7 @@ def refresh_access_token(tokens):
     save_tokens(tokens)
     print("✅ Access token refreshed.")
     return tokens
+
 
 # ─── Get Valid Token ──────────────────────────────────────────────────────────
 def get_valid_token():

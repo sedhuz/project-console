@@ -36,7 +36,7 @@ def main():
     }
 
     # 4) Save to JSON
-    out_file = Path(__file__).parent / "merge_requests.json"
+    out_file = Path(__file__).parent / "json" / "merge_requests.json"
     with open(out_file, "w") as fp:
         json.dump(result, fp, indent=2)  # human-readable dump
 

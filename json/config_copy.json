@@ -1,0 +1,29 @@
+{
+  "gitlab_access_token": "<your_gitlab_access_token>",
+  "gitlab_api_baseurl": "https://git.csez.zohocorpin.com/api/v4/",
+  "gitlab_project_id": "<your_gitlab_project_id>",
+  "gitlab_per_page": 100,
+  "zoho_projects_api_baseurl": "https://projectsapi.zoho.com/api/v3/",
+  "zoho_projects_portal_id": "<your_zoho_projects_portal_id>",
+  "zoho_projects_project_id": "<your_zoho_projects_project_id>",
+  "zoho_projects_user_id": "<your_zoho_projects_user_id>",
+  "zoho_projects_tasks_view_id": "<your_zoho_projects_tasks_custom_view_id>",
+  "zoho_projects_issues_view_id": "<your_zoho_projects_issues_custom_view_id>",
+  "zoho_projects_status_ids": {
+    "task": {
+      "opened": "<your_zoho_projects_status_id_for_opened>",
+      "merged": "<your_zoho_projects_status_id_for_merged>",
+      "closed": "<your_zoho_projects_status_id_for_closed>"
+    }
+  },
+  "zoho_projects_oauth": {
+    "client_id": "<your_zoho_projects_client_id>",
+    "client_secret": "<your_zoho_projects_client_secret>",
+    "scopes": [
+      "ZohoProjects.bugs.ALL",
+      "ZohoProjects.tasklists.READ",
+      "ZohoProjects.tasks.ALL"
+    ],
+    "app_port": 5001
+  }
+}
